@@ -276,48 +276,61 @@ body {
         id="cardHolder"
         name="demoName"
         placeholder="Jane Example"
+        autocomplete="off"
         required>
     </div>
 
     <div class="form-group">
-      <label for="cardReference">Card number</label>
+      <label for="cardReference">Synthetic card reference</label>
       <input
         type="text"
         id="cardReference"
         name="demoReference"
-        placeholder="1234 4568 9012 3456 789"
+        placeholder="LAB-123456"
+        autocomplete="off"
         required>
     </div>
 
     <div class="form-row">
 
       <div class="form-group">
-        <label for="expiry">Expiry</label>
+        <label for="expiry">Demo date (MM / YY)</label>
         <input
-          type="number"
+          type="text"
           id="expiry"
-          name="Expiry"
+          name="demoDate"
           placeholder="MM / YY"
+          maxlength="5"
+          inputmode="numeric"
+          autocomplete="off"
           required>
       </div>
 
       <div class="form-group cvv-group">
-        <label for="verification">CVV</label>
+        <label for="verification">Test reference</label>
         <input
-          type="number"
+          type="text"
           id="verification"
           name="demoVerification"
           placeholder="123"
+          maxlength="4"
+          inputmode="numeric"
+          pattern="[0-9]{3,4}"
+          autocomplete="off"
           required>
       </div>
 
       <div class="form-group zip-group">
         <label for="zip">Postal code</label>
         <input
-          type="number"
+          type="text"
           id="zip"
           name="Postal"
           placeholder="12345"
+          maxlength="5"
+          inputmode="numeric"
+          pattern="[0-9]{5}"
+          autocomplete="off"
           required>
       </div>
 
@@ -376,12 +389,42 @@ body {
   const form = document.getElementById('paymentForm');
   const result = document.getElementById('result');
 
+  // Demo date formatting: MM / YY
+  const dateField = document.getElementById('expiry');
+
+  dateField.addEventListener('input', function() {
+    let digits = this.value.replace(/\D/g, '').slice(0, 4);
+
+    if (digits.length > 2) {
+      digits = digits.slice(0, 2) + '/' + digits.slice(2);
+    }
+
+    this.value = digits;
+  });
+
+  // Restrict synthetic verification reference to 4 digits.
+  const referenceField =
+    document.getElementById('verification');
+
+  referenceField.addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '').slice(0, 4);
+  });
+
+  // Restrict demo postal code to 5 digits.
+  const postalField = document.getElementById('zip');
+
+  postalField.addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '').slice(0, 5);
+  });
+
   form.addEventListener('submit', function(event) {
 
     event.preventDefault();
 
-    // Record only the occurrence of a simulation.
-    // Never transmit the entered field values.
+    if (!form.reportValidity()) return;
+
+    // Record only a harmless simulation event.
+    // No entered values are collected or transmitted.
 
     const eventRecord = {
       event: 'simulated_payment_submission',
