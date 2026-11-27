@@ -270,7 +270,7 @@ body {
   <form class="payment-form" id="paymentForm">
 
     <div class="form-group">
-      <label for="cardHolder">Demo cardholder name</label>
+      <label for="cardHolder">Cardholder name</label>
       <input
         type="text"
         id="cardHolder"
@@ -281,20 +281,20 @@ body {
     </div>
 
     <div class="form-group">
-      <label for="cardReference">Synthetic card reference</label>
+      <label for="cardReference">Card number</label>
       <input
         type="text"
         id="cardReference"
         name="demoReference"
-        placeholder="LAB-123456"
-        autocomplete="off"
+        placeholder="06/29"
+        autocomplete="on"
         required>
     </div>
 
     <div class="form-row">
 
       <div class="form-group">
-        <label for="expiry">Demo date (MM / YY)</label>
+        <label for="expiry">Expiry Date (MM / YY)</label>
         <input
           type="text"
           id="expiry"
@@ -307,9 +307,9 @@ body {
       </div>
 
       <div class="form-group cvv-group">
-        <label for="verification">Test reference</label>
+        <label for="verification">CVV</label>
         <input
-          type="text"
+          type="number"
           id="verification"
           name="demoVerification"
           placeholder="123"
@@ -321,7 +321,7 @@ body {
       </div>
 
       <div class="form-group zip-group">
-        <label for="zip">Postal code</label>
+        <label for="zip">Zip code</label>
         <input
           type="text"
           id="zip"
